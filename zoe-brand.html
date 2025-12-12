@@ -3,8 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoe Chen | The Narrative Architect</title>
     
+    <!-- SEO Meta Tags -->
+    <title>Zoe Chen | The Narrative Architect - 獨立遊戲全端工程師 & AI 敘事開發</title>
+    <meta name="description" content="Zoe Chen，擁有 1 年經驗的獨立遊戲全端工程師兼 AI 故事生成開發者。專精於 LLM 應用落地、自動化故事生成與遊戲開發。提供 AI 導入與客製化 Chatbot 服務。">
+    <meta name="keywords" content="Zoe Chen, 獨立遊戲開發, 全端工程師, AI 故事生成, LLM, Prompt Engineering, Python, Java, 敘事架構師, AI 客服機器人, Make 自動化">
+    <meta name="author" content="Zoe Chen">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph (Facebook, LinkedIn, Line) -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://your-domain.com"> <!-- 請替換為您的實際網址 -->
+    <meta property="og:title" content="Zoe Chen | The Narrative Architect">
+    <meta property="og:description" content="融合獨立遊戲開發與大型語言模型，為商業邏輯注入故事靈魂。提供 AI 解決方案與自動化敘事服務。">
+    <meta property="og:image" content="https://your-domain.com/og-image.jpg"> <!-- 建議上傳一張 1200x630 的預覽圖 -->
+    <meta property="og:site_name" content="The Narrative Architect">
+    <meta property="og:locale" content="zh_TW">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Zoe Chen | The Narrative Architect">
+    <meta name="twitter:description" content="獨立遊戲全端工程師兼 AI 故事生成開發者。專精於 LLM 應用落地與遊戲敘事自動化。">
+    <meta name="twitter:image" content="https://your-domain.com/og-image.jpg">
+
     <!-- Fonts: Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -81,6 +102,18 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
         }
+
+        /* Mobile Menu Transition */
+        #mobile-menu {
+            transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        #mobile-menu.open {
+            max-height: 400px;
+            opacity: 1;
+        }
     </style>
 </head>
 <body class="font-sans antialiased selection:bg-brand-accent selection:text-white">
@@ -90,14 +123,14 @@
 
     <!-- Navigation -->
     <nav class="fixed w-full z-50 bg-[#F9F7F1]/90 backdrop-blur-sm border-b border-brand-decor/30 transition-all duration-300" id="navbar">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="font-serif text-2xl font-bold tracking-tight text-brand-text group">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex flex-wrap justify-between items-center">
+            <a href="#" class="font-serif text-2xl font-bold tracking-tight text-brand-text group z-50">
                 Zoe Chen<span class="text-brand-accent">.</span>
                 <span class="block text-xs font-sans font-light text-brand-decor tracking-widest uppercase mt-1 group-hover:text-brand-accent transition-colors">The Narrative Architect</span>
             </a>
             
             <!-- Desktop Menu -->
-            <div class="hidden md:flex space-x-8 text-sm tracking-wide font-medium text-brand-text/80">
+            <div class="hidden md:flex space-x-8 text-sm tracking-wide font-medium text-brand-text/80 items-center">
                 <a href="#about" class="hover:text-brand-accent transition-colors relative group">
                     關於 Zoe
                     <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
@@ -115,10 +148,22 @@
                 </a>
             </div>
 
-            <!-- Mobile Menu Button (Simple implementation) -->
-            <button class="md:hidden text-brand-text text-xl">
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-brand-text text-xl z-50 focus:outline-none">
                 <i class="fa-solid fa-bars"></i>
             </button>
+
+            <!-- Mobile Menu Dropdown -->
+            <div id="mobile-menu" class="w-full md:hidden bg-[#F9F7F1] border-b border-brand-decor/30 absolute top-full left-0 px-6 shadow-lg">
+                <div class="flex flex-col space-y-4 py-6 text-center font-serif text-lg">
+                    <a href="#about" class="mobile-link hover:text-brand-accent transition-colors">關於 Zoe</a>
+                    <a href="#services" class="mobile-link hover:text-brand-accent transition-colors">AI 解決方案</a>
+                    <a href="#projects" class="mobile-link hover:text-brand-accent transition-colors">實戰案例</a>
+                    <a href="https://calendly.com/zoe-ai-game" target="_blank" class="mobile-link inline-block px-5 py-2 border border-brand-text rounded-full hover:bg-brand-text hover:text-white transition-all duration-300 w-3/4 mx-auto">
+                        預約諮詢
+                    </a>
+                </div>
+            </div>
         </div>
     </nav>
 
@@ -128,7 +173,7 @@
             <p class="font-mono text-brand-accent mb-4 text-sm tracking-widest uppercase opacity-0 animate-fade-in-up" style="animation-delay: 0.2s; animation-fill-mode: forwards;">
                 &lt;System: Online /&gt;
             </p>
-            <h1 class="font-serif text-5xl md:text-7xl font-bold text-brand-text mb-6 leading-tight">
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-brand-text mb-6 leading-tight min-h-[1.2em]">
                 <span id="hero-typewriter"></span><span class="typewriter-cursor"></span>
             </h1>
             <p class="text-lg md:text-xl text-brand-text/70 max-w-2xl mx-auto font-light leading-relaxed opacity-0 animate-fade-in-up" style="animation-delay: 1.5s; animation-fill-mode: forwards;">
@@ -151,7 +196,7 @@
                 <div class="grid grid-cols-2 gap-4 w-full max-w-sm">
                     <!-- 1. Profile Image -->
                     <div class="aspect-[4/5] relative overflow-hidden rounded-sm shadow-lg border border-brand-decor/20 group">
-                        <img src="StarAirIcon.jpg">
+                        <img src="StarAirIcon.jpg" alt="Zoe Chen" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" onerror="this.onerror=null; this.src='https://placehold.co/400x500?text=Zoe+Chen';">
                         <!-- Subtle Overlay for style consistency -->
                         <div class="absolute inset-0 bg-brand-accent/0 group-hover:bg-brand-accent/10 transition-colors duration-500 mix-blend-multiply"></div>
                     </div>
@@ -315,7 +360,7 @@
             <!-- Social Dependencies -->
             <div class="mt-24 pt-12 border-t border-brand-decor/30 w-full font-mono text-sm text-brand-text/60 flex flex-col md:flex-row justify-center gap-6 md:gap-12">
                 <span class="block mb-2 md:mb-0 opacity-50">// External Dependencies</span>
-                <a href="https://github.com/zoeaiturtlesoup" target="_blank" class="hover:text-brand-accent transition-colors">
+                <a href="github.com/zoechen021020-a11y" target="_blank" class="hover:text-brand-accent transition-colors">
                     import <span class="text-brand-text font-semibold">GitHub</span> from 'zoeaiturtlesoup';
                 </a>
                 <a href="https://linkedin.com/in/zoeaiturtlesoup" target="_blank" class="hover:text-brand-accent transition-colors">
@@ -477,6 +522,34 @@
                 navbar.classList.remove('shadow-md');
                 navbar.classList.replace('py-2', 'py-4');
             }
+        });
+
+        // 5. Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            // Toggle icon
+            const icon = mobileMenuBtn.querySelector('i');
+            if (mobileMenu.classList.contains('open')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-xmark');
+            } else {
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close menu when a link is clicked
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+                const icon = mobileMenuBtn.querySelector('i');
+                icon.classList.remove('fa-xmark');
+                icon.classList.add('fa-bars');
+            });
         });
         
         // 5. Fade-in animations for hero elements definition
