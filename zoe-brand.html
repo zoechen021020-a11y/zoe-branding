@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zoe Chen | The Narrative Architect</title>
+    
+    <!-- Fonts: Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;600&family=JetBrains+Mono:wght@400&family=Noto+Serif+TC:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons: FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS (Script for Config) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#F9F7F1',      // 米白色/紙張質感
+                            text: '#2D3436',    // 炭黑
+                            accent: '#E17055',  // 赤陶紅
+                            decor: '#B2BEC3',   // 淡灰
+                            blue: '#0984E3',    // 知性藍 (Option)
+                        }
+                    },
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', '"Noto Serif TC"', 'serif'],
+                        sans: ['"Inter"', '"Noto Serif TC"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    animation: {
+                        'blink': 'blink 1s step-end infinite',
+                    },
+                    keyframes: {
+                        blink: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles for nuances not covered by Tailwind utilities */
+        body {
+            background-color: #F9F7F1;
+            color: #2D3436;
+            overflow-x: hidden;
+        }
+        
+        /* Canvas positioning */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4; /* Subtle effect */
+            pointer-events: none;
+        }
+
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 1s step-end infinite;
+            color: #E17055;
+        }
+
+        /* Hover card lift effect */
+        .project-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-brand-accent selection:text-white">
+
+    <!-- Background Animation Canvas -->
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-[#F9F7F1]/90 backdrop-blur-sm border-b border-brand-decor/30 transition-all duration-300" id="navbar">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="font-serif text-2xl font-bold tracking-tight text-brand-text group">
+                Zoe Chen<span class="text-brand-accent">.</span>
+                <span class="block text-xs font-sans font-light text-brand-decor tracking-widest uppercase mt-1 group-hover:text-brand-accent transition-colors">The Narrative Architect</span>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8 text-sm tracking-wide font-medium text-brand-text/80">
+                <a href="#about" class="hover:text-brand-accent transition-colors relative group">
+                    關於 Zoe
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#services" class="hover:text-brand-accent transition-colors relative group">
+                    AI 解決方案
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#projects" class="hover:text-brand-accent transition-colors relative group">
+                    實戰案例
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-accent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="https://calendly.com/zoe-ai-game" target="_blank" class="px-5 py-2 border border-brand-text rounded-full hover:bg-brand-text hover:text-white transition-all duration-300">
+                    預約諮詢
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button (Simple implementation) -->
+            <button class="md:hidden text-brand-text text-xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex flex-col justify-center items-center text-center px-6 pt-20">
+        <div class="max-w-4xl mx-auto">
+            <p class="font-mono text-brand-accent mb-4 text-sm tracking-widest uppercase opacity-0 animate-fade-in-up" style="animation-delay: 0.2s; animation-fill-mode: forwards;">
+                &lt;System: Online /&gt;
+            </p>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-brand-text mb-6 leading-tight">
+                <span id="hero-typewriter"></span><span class="typewriter-cursor"></span>
+            </h1>
+            <p class="text-lg md:text-xl text-brand-text/70 max-w-2xl mx-auto font-light leading-relaxed opacity-0 animate-fade-in-up" style="animation-delay: 1.5s; animation-fill-mode: forwards;">
+                融合獨立遊戲開發與大型語言模型，為商業邏輯注入故事靈魂。
+            </p>
+            <div class="mt-12 opacity-0 animate-fade-in-up" style="animation-delay: 2s; animation-fill-mode: forwards;">
+                <a href="#about" class="inline-flex flex-col items-center text-brand-decor hover:text-brand-accent transition-colors duration-300">
+                    <span class="text-xs uppercase tracking-[0.2em] mb-2">Scroll to Read</span>
+                    <i class="fa-solid fa-arrow-down animate-bounce"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-24 bg-white/30 backdrop-blur-md border-y border-white/40">
+        <div class="max-w-5xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-5 relative">
+                <!-- Abstract Image Representation -->
+                <div class="aspect-[4/5] bg-brand-decor/10 border border-brand-decor/20 p-8 relative overflow-hidden flex items-center justify-center">
+                    <div class="absolute inset-0 opacity-10 font-mono text-xs break-all text-brand-text select-none overflow-hidden leading-tight">
+                        class NarrativeArchitect { constructor() { this.skills = ['Python', 'Java', 'LLM']; this.passion = 'Storytelling'; } buildWorld() { return new Experience(); } } 01001000 01100101 01101100 01101100 01101111
+                    </div>
+                    <div class="z-10 text-center">
+                        <i class="fa-solid fa-fingerprint text-6xl text-brand-accent/80 mb-4"></i>
+                        <h3 class="font-serif text-2xl italic">Zoe Chen</h3>
+                        <p class="font-mono text-xs mt-2 text-brand-text/60">AI Game Dev | Full Stack</p>
+                    </div>
+                </div>
+            </div>
+            <div class="md:col-span-7">
+                <h2 class="font-serif text-4xl font-bold text-brand-text mb-8 relative inline-block">
+                    關於 Zoe
+                    <span class="absolute -top-4 -right-4 text-6xl text-brand-decor/20 font-serif italic -z-10">About</span>
+                </h2>
+                <div class="prose prose-lg text-brand-text/80 font-light leading-relaxed text-justify">
+                    <p class="mb-6">
+                        我是 Zoe Chen，一名擁有 1 年實戰經驗的獨立遊戲全端工程師與 AI 敘事開發者。在程式碼與文學的交會處，我擅長將理性的 Python/Java 技術堆疊與感性的故事創作融合。
+                    </p>
+                    <p class="mb-6">
+                        專精於 <strong>LLM 大型語言模型應用落地</strong>、<strong>Prompt Engineering</strong> 以及精細的資料集清洗，我致力於透過 Vibe Coding 打造具備靈魂的 AI 互動體驗。從獨立遊戲的自動化敘事引擎到企業級 AI 客服系統，我不僅僅是在寫程式，更是在構建未來的數位敘事架構。
+                    </p>
+                </div>
+                
+                <!-- Tech Stack Tags -->
+                <div class="flex flex-wrap gap-3 mt-8">
+                    <span class="px-4 py-1 border border-brand-decor/40 rounded-full text-xs font-mono text-brand-text/70">Python</span>
+                    <span class="px-4 py-1 border border-brand-decor/40 rounded-full text-xs font-mono text-brand-text/70">Java</span>
+                    <span class="px-4 py-1 border border-brand-decor/40 rounded-full text-xs font-mono text-brand-text/70">LLM/GPT-4</span>
+                    <span class="px-4 py-1 border border-brand-decor/40 rounded-full text-xs font-mono text-brand-text/70">Prompt Eng.</span>
+                    <span class="px-4 py-1 border border-brand-decor/40 rounded-full text-xs font-mono text-brand-text/70">Make Automation</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-4xl font-bold text-brand-text mb-4">AI 解決方案</h2>
+                <div class="w-16 h-1 bg-brand-accent mx-auto"></div>
+                <p class="mt-4 font-serif italic text-brand-text/60">"Empowering Business with Intelligence"</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Service 1 -->
+                <div class="group p-8 border border-white/50 bg-white/30 backdrop-blur-md shadow-sm hover:border-brand-accent/50 transition-all duration-300 relative overflow-hidden rounded-sm">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-wand-magic-sparkles text-8xl"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-brand-accent transition-colors">生成式 AI 導入與遊戲設計</h3>
+                    <p class="text-brand-text/70 leading-relaxed mb-6">
+                        利用先進的 LLM 技術，將靜態文本轉化為動態、可互動的資產。專注於「自動化故事生成」，為遊戲開發注入無限的隨機性與生命力，大幅降低內容產製成本，創造獨一無二的玩家體驗。
+                    </p>
+                    <ul class="space-y-2 font-mono text-sm text-brand-text/60">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-2"></i> 自動化故事生成</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-2"></i> NPC 對話系統設計</li>
+                    </ul>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="group p-8 border border-white/50 bg-white/30 backdrop-blur-md shadow-sm hover:border-brand-accent/50 transition-all duration-300 relative overflow-hidden rounded-sm">
+                    <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
+                        <i class="fa-solid fa-robot text-8xl"></i>
+                    </div>
+                    <h3 class="font-serif text-2xl font-bold mb-4 group-hover:text-brand-accent transition-colors">AI 客服機器人規劃</h3>
+                    <p class="text-brand-text/70 leading-relaxed mb-6">
+                        針對企業痛點，提供從策略規劃到落地的客製化 Chatbot 解決方案。不只是自動回覆，而是打造具備品牌人格、能理解上下文的智慧助手，優化營運效率的同時，賦予品牌具備溫度的溝通能力。
+                    </p>
+                    <ul class="space-y-2 font-mono text-sm text-brand-text/60">
+                        <li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-2"></i> 智慧客服架構規劃</li>
+                        <li class="flex items-center"><i class="fa-solid fa-check text-brand-accent mr-2"></i> Make/Gemini 流程自動化</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio / Open Source Section (Updated Styling) -->
+    <section id="projects" class="py-24 relative overflow-hidden border-t border-brand-decor/20">
+        <!-- Decoration: Subtle watermark or very light pattern instead of dark code rain -->
+        <div class="absolute top-0 right-0 p-12 opacity-[0.03] select-none pointer-events-none">
+            <i class="fa-solid fa-laptop-code text-9xl"></i>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            <h2 class="font-serif text-3xl font-bold mb-12 flex items-center gap-4 text-brand-text">
+                <span class="text-brand-accent">//</span> 開源貢獻 & 技術資源
+            </h2>
+
+            <div class="grid md:grid-cols-3 gap-6">
+                <!-- Project 1 -->
+                <a href="https://lin.ee/8eecvQd" target="_blank" class="project-card block bg-white/30 backdrop-blur-md border border-white/50 shadow-sm p-8 rounded-sm hover:border-brand-accent/50 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fa-brands fa-line text-3xl text-[#06C755] group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-mono text-brand-decor border border-brand-decor/30 px-2 py-1 rounded">BOT</span>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2 text-brand-text group-hover:text-brand-accent transition-colors">航空業客服機器人</h3>
+                    <p class="text-xs text-brand-accent font-mono mb-4">Make + Gemini API</p>
+                    <p class="text-sm leading-relaxed text-brand-text/70">
+                        基於 Make 與 Gemini，打造自動化訂單、航班客服機器人。解決即時查詢與票務處理痛點。
+                    </p>
+                </a>
+
+                <!-- Project 2 -->
+                <a href="https://turtlesoup-ai-game.com" target="_blank" class="project-card block bg-white/30 backdrop-blur-md border border-white/50 shadow-sm p-8 rounded-sm hover:border-brand-accent/50 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fa-solid fa-gamepad text-3xl text-brand-accent group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-mono text-brand-decor border border-brand-decor/30 px-2 py-1 rounded">GAME</span>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2 text-brand-text group-hover:text-brand-accent transition-colors">AI 海龜湯遊戲</h3>
+                    <p class="text-xs text-brand-accent font-mono mb-4">GPT-4o + React</p>
+                    <p class="text-sm leading-relaxed text-brand-text/70">
+                        使用 GPT-4o 模型，讓 AI 擔任出題者與裁判 (Host)，與玩家進行邏輯推理互動，動態生成無限謎題。
+                    </p>
+                </a>
+
+                <!-- Project 3 -->
+                <a href="https://zoe-ai-tools.com/gamestory-gen" target="_blank" class="project-card block bg-white/30 backdrop-blur-md border border-white/50 shadow-sm p-8 rounded-sm hover:border-brand-accent/50 group">
+                    <div class="flex justify-between items-start mb-6">
+                        <i class="fa-solid fa-pen-nib text-3xl text-blue-500 group-hover:scale-110 transition-transform"></i>
+                        <span class="text-xs font-mono text-brand-decor border border-brand-decor/30 px-2 py-1 rounded">TOOL</span>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold mb-2 text-brand-text group-hover:text-brand-accent transition-colors">遊戲故事生成器</h3>
+                    <p class="text-xs text-brand-accent font-mono mb-4">Content Tooling</p>
+                    <p class="text-sm leading-relaxed text-brand-text/70">
+                        專為遊戲開發的輔助工具，快速生成高品質的遊戲背景故事、角色設定與世界觀架構。
+                    </p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Epilogue Section -->
+    <section id="contact" class="min-h-[80vh] flex flex-col justify-center items-center px-6 relative border-t border-brand-decor/20">
+        <div class="max-w-2xl w-full text-center">
+            <p class="font-serif italic text-brand-text/50 mb-6 text-lg">Epilogue</p>
+            <h2 class="font-serif text-5xl md:text-6xl font-bold text-brand-text mb-12">
+                未完待續...
+            </h2>
+            
+            <p class="font-light text-brand-text/80 mb-16 leading-relaxed">
+                故事的結局還未寫下，或許下一章節，將由我們共同譜寫。
+            </p>
+
+            <!-- Dynamic Button -->
+            <a href="https://calendly.com/zoe-ai-game" target="_blank" id="contact-btn" class="inline-block px-10 py-5 border-2 border-brand-text text-brand-text font-serif text-xl transition-all duration-300 hover:border-brand-accent hover:text-brand-accent group w-full md:w-auto min-w-[320px]">
+                <span id="btn-text" class="relative">Drafting the Next Chapter...</span><span id="btn-cursor" class="opacity-0 group-hover:opacity-100 ml-1">|</span>
+            </a>
+            
+            <!-- Social Dependencies -->
+            <div class="mt-24 pt-12 border-t border-brand-decor/30 w-full font-mono text-sm text-brand-text/60 flex flex-col md:flex-row justify-center gap-6 md:gap-12">
+                <span class="block mb-2 md:mb-0 opacity-50">// External Dependencies</span>
+                <a href="https://github.com/zoeaiturtlesoup" target="_blank" class="hover:text-brand-accent transition-colors">
+                    import <span class="text-brand-text font-semibold">GitHub</span> from 'zoeaiturtlesoup';
+                </a>
+                <a href="https://linkedin.com/in/zoeaiturtlesoup" target="_blank" class="hover:text-brand-accent transition-colors">
+                    import <span class="text-brand-text font-semibold">LinkedIn</span> from 'zoeaiturtlesoup';
+                </a>
+            </div>
+            
+            <footer class="mt-12 text-xs text-brand-decor font-light">
+                &copy; 2025 Zoe Chen. Crafted with Intelligence.
+            </footer>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script>
+        // 1. Canvas Animation: Subtle Particle Network
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2 + 1;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = '#B2BEC3';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.min(width * 0.05, 100); // Responsive count
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            
+            // Draw connections
+            ctx.strokeStyle = '#B2BEC3';
+            ctx.lineWidth = 0.5;
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Connect close particles
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 150) {
+                        ctx.globalAlpha = 1 - (distance / 150);
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                        ctx.globalAlpha = 1;
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        initParticles();
+        animate();
+
+
+        // 2. Hero Typewriter Effect
+        const heroText = "Empowering Business with Intelligence";
+        const heroElement = document.getElementById('hero-typewriter');
+        let heroIndex = 0;
+
+        function typeHero() {
+            if (heroIndex < heroText.length) {
+                heroElement.innerHTML += heroText.charAt(heroIndex);
+                heroIndex++;
+                setTimeout(typeHero, 80); // Typing speed
+            }
+        }
+        // Start after a slight delay
+        setTimeout(typeHero, 500);
+
+
+        // 3. Contact Button Interaction (Backspace -> Retype)
+        const btn = document.getElementById('contact-btn');
+        const btnTextSpan = document.getElementById('btn-text');
+        const originalText = "Drafting the Next Chapter...";
+        const newText = "Collaborate with Me";
+        let intervalId = null;
+        let isHovered = false;
+
+        btn.addEventListener('mouseenter', () => {
+            isHovered = true;
+            clearInterval(intervalId);
+            
+            let currentText = btnTextSpan.innerText;
+            
+            // Step 1: Backspace
+            intervalId = setInterval(() => {
+                if (currentText.length > 0) {
+                    currentText = currentText.slice(0, -1);
+                    btnTextSpan.innerText = currentText;
+                } else {
+                    clearInterval(intervalId);
+                    // Step 2: Type new text
+                    let typeIndex = 0;
+                    intervalId = setInterval(() => {
+                        if (typeIndex < newText.length) {
+                            btnTextSpan.innerText += newText.charAt(typeIndex);
+                            typeIndex++;
+                        } else {
+                            clearInterval(intervalId);
+                        }
+                    }, 50);
+                }
+            }, 30);
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            isHovered = false;
+            clearInterval(intervalId);
+            btnTextSpan.innerText = originalText;
+        });
+
+        // 4. Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-md');
+                navbar.classList.replace('py-4', 'py-2');
+            } else {
+                navbar.classList.remove('shadow-md');
+                navbar.classList.replace('py-2', 'py-4');
+            }
+        });
+        
+        // 5. Fade-in animations for hero elements definition
+        const styleSheet = document.createElement("style");
+        styleSheet.innerText = `
+            @keyframes fadeInUp {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .animate-fade-in-up {
+                animation: fadeInUp 0.8s ease-out forwards;
+            }
+        `;
+        document.head.appendChild(styleSheet);
+
+    </script>
+</body>
+</html>
